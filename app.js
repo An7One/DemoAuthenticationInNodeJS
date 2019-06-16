@@ -7,6 +7,7 @@ import errorHandler from 'errorhandler'
 import morgan from 'morgan'
 import { connectToDb } from './database'
 import { User } from './model/User'
+import passport from './config/passport'
 
 // to configure isProduction variable
 const isProduction = process.env.NODE_ENV === 'production'
