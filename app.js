@@ -5,9 +5,10 @@ import session from 'express-session'
 import cors from 'cors'
 import errorHandler from 'errorhandler'
 import morgan from 'morgan'
-import { connectToDb } from './database'
+import connectToDb from './database'
 import { User } from './model/User'
 import passport from './config/passport'
+import routes from './routes/index'
 
 // to configure isProduction variable
 const isProduction = process.env.NODE_ENV === 'production'
@@ -35,11 +36,14 @@ if (!isProduction) {
 }
 
 // to configure Mongoose
-connectToDb
+connectToDb()
+
+// to configure routes
+app.use(routes)
 
 // Error handlers & middlewares
 if (!isProduction) {
-  app.use((err, req, res) => {
+  app.use((err, req, res, next) => {
     res.status(err.status || 500)
 
     res.json({
@@ -51,7 +55,7 @@ if (!isProduction) {
   })
 }
 
-app.use((err, req, res) => {
+app.use((err, req, res, next) => {
   res.status(err.status || 500)
 
   res.json({

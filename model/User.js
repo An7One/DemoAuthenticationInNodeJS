@@ -10,14 +10,14 @@ const UserSchema = new Schema({
   salt: String
 })
 
-UserSchema.methods.setPassword = password => {
+UserSchema.methods.setPassword = function (password) {
   this.salt = crypto.randomBytes(16).toString('hex')
   this.hash = crypto
     .pbkdf2Sync(password, this.salt, 10000, 512, 'sha512')
     .toString('hex')
 }
 
-UserSchema.methods.validatePassword = password => {
+UserSchema.methods.validatePassword = function (password) {
   const hash = crypto
     .pbkdf2Sync(password, this.salt, 10000, 512, 'sha512')
     .toString('hex')
@@ -25,7 +25,7 @@ UserSchema.methods.validatePassword = password => {
 }
 
 const expireAfterDay = 1
-UserSchema.methods.generateJWT = () => {
+UserSchema.methods.generateJWT = function () {
   const today = new Date()
   const expirationDate = new Date(today)
   expirationDate.setDate(today.getDate() + expireAfterDay)
@@ -40,7 +40,7 @@ UserSchema.methods.generateJWT = () => {
   )
 }
 
-UserSchema.methods.toAuthJson = () => {
+UserSchema.methods.toAuthJson = function () {
   return {
     _id: this._id,
     email: this.email,

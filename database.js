@@ -23,7 +23,11 @@ const connectToDb = async () => {
     if (!isProduction) {
       mongoose.set('debug', true)
     }
-  } catch (err) {}
+
+    console.log('Successfully connected to DB')
+  } catch (err) {
+    console.error(err)
+  }
 }
 
 export default connectToDb
