@@ -10,7 +10,7 @@ const isProduction = process.env.NODE_ENV === 'production'
 const connectToDb = async () => {
   try {
     await mongoose.connect(
-      process.env.COSMOSDB_CONNSTR,
+      process.env.COSMOSDB_CONNSTR + '?ssl=true&replicaSet=globaldb',
       {
         auth: {
           user: process.env.COSMOSDB_USERNAME,
@@ -19,7 +19,6 @@ const connectToDb = async () => {
         useNewUrlParser: true
       }
     )
-
     if (!isProduction) {
       mongoose.set('debug', true)
     }

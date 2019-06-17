@@ -6,7 +6,7 @@ import cors from 'cors'
 import errorHandler from 'errorhandler'
 import morgan from 'morgan'
 import connectToDb from './database'
-import { User } from './model/User'
+import User from './model/User'
 import passport from './config/passport'
 import routes from './routes/index'
 
