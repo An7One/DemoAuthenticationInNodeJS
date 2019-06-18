@@ -66,9 +66,10 @@ router.post('/login', auth.optional, (req, res, next) => {
         return next(err)
       }
 
-      if (passportuser) {
+      if (passportUser) {
         const user = passportUser
         user.token = passportUser.generateJWT()
+        console.log('')
 
         return res.json({ user: user.toAuthJSON() })
       }
